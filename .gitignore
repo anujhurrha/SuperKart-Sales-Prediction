@@ -1,4 +1,21 @@
+# macOS
 .DS_Store
-**/.DS_Store
+
+# VS Code
 .vscode/
-.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env
+venv/
+.venv/
+
+# Output files
+*.log
