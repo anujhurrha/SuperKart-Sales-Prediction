@@ -5,8 +5,8 @@ from flask import Flask, request, jsonify
 
 superkart_api = Flask("SuperKart")
 
-# Load the trained Random Forest model
-model = joblib.load("random_forest_sales_model.pkl")
+# Load the final tuned XGBoost model
+model = joblib.load("xgboost_sales_model.pkl")
 
 
 @superkart_api.get("/")
@@ -23,20 +23,22 @@ def predict_sales():
         "Product_Weight": data["Product_Weight"],
         "Product_Sugar_Content": data["Product_Sugar_Content"],
         "Product_Allocated_Area": data["Product_Allocated_Area"],
-        "Product_Type": data["Product_Type"],
         "Product_MRP": data["Product_MRP"],
-        "Store_Id": data["Store_Id"],
-        "Store_Establishment_Year": data["Store_Establishment_Year"],
         "Store_Size": data["Store_Size"],
         "Store_Location_City_Type": data["Store_Location_City_Type"],
         "Store_Type": data["Store_Type"],
+        "Product_Id_char": data["Product_Id_char"],
+        "Store_Age_Years": data["Store_Age_Years"],
+        "Product_Type_Category": data["Product_Type_Category"]
     }
 
     input_df = pd.DataFrame([sample])
 
     prediction = model.predict(input_df)[0]
 
-    return jsonify({"Predicted Sales": float(prediction)})
+    return jsonify({
+        "Predicted Sales": float(prediction)
+    })
 
 
 @superkart_api.post("/v1/predictbatch")
